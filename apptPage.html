@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowling Pro Shop - Appointments</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 100px 20px;
+            background: #0f172a;
+            min-height: 100vh;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px 100px 10px;
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #f1f5f9;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+        }
+        .form-section {
+            margin-bottom: 30px;
+            padding: 24px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .form-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            box-sizing: border-box;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            background: #0f172a;
+            color: #f1f5f9;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #475569;
+            box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.2);
+        }
+        select option {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        button {
+            padding: 12px 24px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        .btn-secondary {
+            background: #64748b;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #475569;
+        }
+        #statusMessage {
+            padding: 14px 20px;
+            margin: 0 auto 20px auto;
+            border-radius: 12px;
+            display: none;
+            max-width: 600px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .success {
+            background-color: #166534;
+            color: #dcfce7;
+            border: 1px solid #22c55e;
+        }
+        .error {
+            background-color: #7f1d1d;
+            color: #fecaca;
+            border: 1px solid #ef4444;
+        }
+        .info {
+            background-color: #1e3a8a;
+            color: #dbeafe;
+            border: 1px solid #3b82f6;
+        }
+        #appointmentsDisplay {
+            margin-top: 20px;
+        }
+        .appointment-card {
+            padding: 20px;
+            margin: 10px 0;
+            background-color: #0f172a;
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+        .appointment-card h4 {
+            margin: 0 0 12px 0;
+            color: #f1f5f9;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .appointment-card p {
+            margin: 6px 0;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .appointment-card p strong {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+        .no-appointments {
+            padding: 20px;
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+        }
+        .loading {
+            padding: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        #todayAppointments {
+            background-color: rgba(59, 130, 246, 0.1);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        #todayAppointments h3 {
+            margin-top: 0;
+            color: #3b82f6;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .footer-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px;
+        }
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            text-align: center;
+            flex: 1;
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            .footer-nav-container {
+                padding: 0 5px;
+                gap: 5px;
+            }
+            .footer-nav a {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .footer-nav a {
+                padding: 8px 5px;
+                font-size: 12px;
+            }
+        }
+        .footer-nav a:hover {
+            background-color: #555;
+        }
+        .footer-nav a.active {
+            background-color: #007bff;
+        }
+        h1 {
+            font-size: 28px;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Bowling Pro Shop Appointments</h1>
+    
+    <div id="statusMessage"></div>
+
+    <!-- Next Appointment -->
+    <div id="todayAppointments" class="form-section">
+        <h3>Next Appointment</h3>
+        <div id="todayAppointmentsList" class="loading">Loading next appointment...</div>
+    </div>
+
+    <!-- New Appointment Form -->
+    <form id="appointmentForm">
+        <div class="form-section">
+            <h2>Schedule New Appointment</h2>
+            
+            <div class="form-group">
+                <label for="customerName">Customer Name *</label>
+                <input type="text" id="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="customerPhone">Customer Phone Number *</label>
+                <input type="text" id="customerPhone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location *</label>
+                <select id="location" required>
+                    <option value="">Select Location</option>
+                    <option value="Valley Lanes">Valley Lanes</option>
+                    <option value="South Side">South Side</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="apptDate">Appointment Date *</label>
+                <input type="date" id="apptDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="apptTime">Appointment Time *</label>
+                <select id="apptTime" required disabled>
+                    <option value="">Select a date first</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="serviceDescription">Service Description *</label>
+                <textarea id="serviceDescription" required placeholder="What needs to be done?"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Schedule Appointment</button>
+            <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+        </div>
+    </form>
+
+    <!-- Appointments for Selected Date -->
+    <div id="appointmentsDisplay" class="form-section" style="display: none;">
+        <h2>Appointments for <span id="selectedDateDisplay"></span></h2>
+        <div id="appointmentsList"></div>
+    </div>
+
+    <script>
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwioXwVtnFSfFILE4ScFHoIrNg6KGNr0aOL4J31yRaLFu2DAbMG_9zivHgOB3PMxkAK7Q/exec';
+
+        // Time slots by day of week
+        const timeSlots = {
+            1: generateTimeSlots('18:00', '20:45', 15), // Monday
+            2: generateTimeSlots('18:00', '20:45', 15), // Tuesday
+            3: generateTimeSlots('18:00', '20:45', 15), // Wednesday
+            4: generateTimeSlots('18:00', '20:45', 15), // Thursday
+            6: generateTimeSlots('09:00', '13:00', 15), // Saturday
+            0: generateTimeSlots('16:00', '20:30', 15)  // Sunday
+        };
+
+        function generateTimeSlots(startTime, endTime, intervalMinutes) {
+            const slots = [];
+            const [startHour, startMin] = startTime.split(':').map(Number);
+            const [endHour, endMin] = endTime.split(':').map(Number);
+            
+            let currentHour = startHour;
+            let currentMin = startMin;
+            
+            while (currentHour < endHour || (currentHour === endHour && currentMin <= endMin)) {
+                const hour12 = currentHour > 12 ? currentHour - 12 : (currentHour === 0 ? 12 : currentHour);
+                const ampm = currentHour >= 12 ? 'PM' : 'AM';
+                const timeStr = `${hour12}:${currentMin.toString().padStart(2, '0')} ${ampm}`;
+                const timeValue = `${currentHour.toString().padStart(2, '0')}:${currentMin.toString().padStart(2, '0')}`;
+                
+                slots.push({ display: timeStr, value: timeValue });
+                
+                currentMin += intervalMinutes;
+                if (currentMin >= 60) {
+                    currentHour++;
+                    currentMin -= 60;
+                }
+            }
+            
+            return slots;
+        }
+
+        // Load next appointment on page load
+        window.onload = function() {
+            loadNextAppointment();
+        };
+
+        // Handle date selection
+        document.getElementById('apptDate').addEventListener('change', function() {
+            const selectedDate = this.value;
+            if (selectedDate) {
+                const date = new Date(selectedDate + 'T00:00:00');
+                const dayOfWeek = date.getDay();
+                
+                updateTimeSlots(dayOfWeek);
+                loadAppointmentsForDate(selectedDate);
+            }
+        });
+
+        function updateTimeSlots(dayOfWeek) {
+            const timeSelect = document.getElementById('apptTime');
+            timeSelect.innerHTML = '';
+            
+            if (timeSlots[dayOfWeek]) {
+                timeSelect.disabled = false;
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select time';
+                timeSelect.appendChild(defaultOption);
+                
+                timeSlots[dayOfWeek].forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot.value;
+                    option.textContent = slot.display;
+                    timeSelect.appendChild(option);
+                });
+            } else {
+                timeSelect.disabled = true;
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No appointments available on this day';
+                timeSelect.appendChild(option);
+            }
+        }
+
+        function loadNextAppointment() {
+            fetch(`${scriptUrl}?action=getNextAppointment`)
+                .then(response => response.json())
+                .then(data => {
+                    displayNextAppointment(data.appointment);
+                })
+                .catch(error => {
+                    console.error('Error loading next appointment:', error);
+                    document.getElementById('todayAppointmentsList').innerHTML = 
+                        '<p class="error">Error loading appointment</p>';
+                });
+        }
+
+        function displayNextAppointment(appointment) {
+            const container = document.getElementById('todayAppointmentsList');
+            
+            if (!appointment) {
+                container.innerHTML = '<p class="no-appointments">No upcoming appointments scheduled</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'appointment-card';
+            const apptDate = new Date(appointment.date + 'T00:00:00');
+            const dateStr = apptDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            card.innerHTML = `
+                <h4>${dateStr} at ${appointment.time}</h4>
+                <p><strong>Customer:</strong> ${appointment.name}</p>
+                <p><strong>Phone:</strong> ${appointment.phone}</p>
+                <p><strong>Service:</strong> ${appointment.service}</p>
+                <p><strong>Location:</strong> ${appointment.location}</p>
+            `;
+            container.appendChild(card);
+        }
+
+        function loadAppointmentsForDate(date) {
+            const displayDiv = document.getElementById('appointmentsDisplay');
+            const listDiv = document.getElementById('appointmentsList');
+            const dateDisplay = document.getElementById('selectedDateDisplay');
+            
+            displayDiv.style.display = 'block';
+            dateDisplay.textContent = new Date(date + 'T00:00:00').toLocaleDateString();
+            listDiv.innerHTML = '<p class="loading">Loading appointments...</p>';
+            
+            fetch(`${scriptUrl}?action=getAppointments&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayAppointments(data.appointments || []);
+                })
+                .catch(error => {
+                    console.error('Error loading appointments:', error);
+                    listDiv.innerHTML = '<p class="error">Error loading appointments</p>';
+                });
+        }
+
+        function displayAppointments(appointments) {
+            const listDiv = document.getElementById('appointmentsList');
+            
+            if (appointments.length === 0) {
+                listDiv.innerHTML = '<p class="no-appointments">No appointments scheduled for this date</p>';
+                return;
+            }
+            
+            listDiv.innerHTML = '';
+            appointments.forEach(appt => {
+                const card = document.createElement('div');
+                card.className = 'appointment-card';
+                card.innerHTML = `
+                    <h4>${appt.time} - ${appt.name}</h4>
+                    <p><strong>Phone:</strong> ${appt.phone}</p>
+                    <p><strong>Service:</strong> ${appt.service}</p>
+                    <p><strong>Location:</strong> ${appt.location}</p>
+                `;
+                listDiv.appendChild(card);
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('appointmentForm').reset();
+            document.getElementById('apptTime').disabled = true;
+            document.getElementById('appointmentsDisplay').style.display = 'none';
+            showMessage('Form cleared', 'success');
+        }
+
+        function showMessage(message, type) {
+            const msgDiv = document.getElementById('statusMessage');
+            msgDiv.textContent = message;
+            msgDiv.className = type;
+            msgDiv.style.display = 'block';
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitAppointment();
+        });
+
+        function submitAppointment() {
+            const appointmentData = {
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                location: document.getElementById('location').value,
+                apptDate: document.getElementById('apptDate').value,
+                apptTime: document.getElementById('apptTime').value,
+                service: document.getElementById('serviceDescription').value
+            };
+
+            console.log('Submitting appointment:', appointmentData);
+            
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(appointmentData)
+            })
+            .then(() => {
+                showMessage('Appointment scheduled successfully!', 'success');
+                resetForm();
+                loadNextAppointment();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('Error scheduling appointment. Please try again.', 'error');
+            });
+        }
+    </script>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+        <div class="footer-nav-container">
+            <a href="orderPage.html">Orders</a>
+            <a href="servicePage.html">Services</a>
+            <a href="apptPage.html" class="active">Appointments</a>
+            <a href="index.html">Todo</a>
+        </div>
+    </div>
+</body>
+</html>
