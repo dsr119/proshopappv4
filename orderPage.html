@@ -19,9 +19,7 @@
             min-height: 100vh;
         }
         @media (max-width: 768px) {
-            body {
-                padding: 20px 10px 100px 10px;
-            }
+            body { padding: 20px 10px 100px 10px; }
         }
         h1 {
             text-align: center;
@@ -31,10 +29,7 @@
             font-weight: 700;
         }
         @media (max-width: 768px) {
-            h1 {
-                font-size: 28px;
-                margin-bottom: 20px;
-            }
+            h1 { font-size: 28px; margin-bottom: 20px; }
         }
         .form-section {
             margin-bottom: 30px;
@@ -51,9 +46,7 @@
             font-size: 22px;
             font-weight: 700;
         }
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 20px; }
         label {
             display: block;
             margin-bottom: 8px;
@@ -62,6 +55,7 @@
             font-size: 14px;
         }
         input[type="text"],
+        input[type="email"],
         input[type="date"],
         select,
         textarea {
@@ -77,6 +71,7 @@
             font-family: inherit;
         }
         input[type="text"]:focus,
+        input[type="email"]:focus,
         input[type="date"]:focus,
         select:focus,
         textarea:focus {
@@ -84,14 +79,8 @@
             border-color: #475569;
             box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.2);
         }
-        select option {
-            background: #1e293b;
-            color: #f1f5f9;
-        }
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
+        select option { background: #1e293b; color: #f1f5f9; }
+        textarea { min-height: 80px; resize: vertical; }
         button {
             padding: 12px 24px;
             margin: 5px;
@@ -102,34 +91,14 @@
             font-weight: 600;
             transition: all 0.2s ease;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-        }
-        button:active {
-            transform: translateY(0);
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-        .btn-secondary {
-            background: #64748b;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #475569;
-        }
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+        button:active { transform: translateY(0); }
+        .btn-primary { background: #2563eb; color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: #64748b; color: white; }
+        .btn-secondary:hover { background: #475569; }
+        .btn-danger { background: #dc2626; color: white; }
+        .btn-danger:hover { background: #b91c1c; }
         .order-item {
             margin-bottom: 20px;
             padding: 20px;
@@ -153,21 +122,11 @@
             font-weight: 500;
             text-align: center;
         }
-        .success {
-            background-color: #166534;
-            color: #dcfce7;
-            border: 1px solid #22c55e;
-        }
-        .error {
-            background-color: #7f1d1d;
-            color: #fecaca;
-            border: 1px solid #ef4444;
-        }
+        .success { background-color: #166534; color: #dcfce7; border: 1px solid #22c55e; }
+        .error { background-color: #7f1d1d; color: #fecaca; border: 1px solid #ef4444; }
         .footer-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             padding: 16px 0;
@@ -196,52 +155,42 @@
             white-space: nowrap;
             font-size: 15px;
         }
-        .footer-nav a:hover {
-            background: #1e293b;
-            color: #cbd5e1;
-        }
-        .footer-nav a.active {
-            background: #3b82f6;
-            color: white;
-        }
+        .footer-nav a:hover { background: #1e293b; color: #cbd5e1; }
+        .footer-nav a.active { background: #3b82f6; color: white; }
         @media (max-width: 768px) {
-            .footer-nav-container {
-                padding: 0 8px;
-                gap: 6px;
-            }
-            .footer-nav a {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
+            .footer-nav-container { padding: 0 8px; gap: 6px; }
+            .footer-nav a { padding: 10px 12px; font-size: 13px; }
         }
         @media (max-width: 480px) {
-            .footer-nav a {
-                padding: 10px 8px;
-                font-size: 11px;
-            }
+            .footer-nav a { padding: 10px 8px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <h1>Bowling Pro Shop Order Form</h1>
-    
+
     <div id="statusMessage"></div>
 
     <form id="orderForm">
         <!-- Customer Information -->
         <div class="form-section">
             <h2>Customer Information</h2>
-            
+
             <div class="form-group">
                 <label for="customerName">Customer Name *</label>
                 <input type="text" id="customerName" required>
             </div>
-            
+
+            <div class="form-group">
+                <label for="customerEmail">Customer Email</label>
+                <input type="email" id="customerEmail">
+            </div>
+
             <div class="form-group">
                 <label for="customerNumber">Customer Phone Number *</label>
                 <input type="text" id="customerNumber" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="orderLocation">Order Location *</label>
                 <select id="orderLocation" required>
@@ -250,12 +199,16 @@
                     <option value="South Side">South Side</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
-                <label for="orderDue">Order Due Date *</label>
-                <input type="date" id="orderDue" required>
+                <label for="pickupLocation">Pickup Location *</label>
+                <select id="pickupLocation" required>
+                    <option value="">Select Pickup Location</option>
+                    <option value="Valley Lanes">Valley Lanes</option>
+                    <option value="South Side">South Side</option>
+                </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="customerPaid">Customer Paid *</label>
                 <select id="customerPaid" required>
@@ -263,11 +216,6 @@
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="staffMember">Staff Member *</label>
-                <input type="text" id="staffMember" required>
             </div>
         </div>
 
@@ -310,7 +258,6 @@
         let accessoryOrderCount = 0;
         let shoeOrderCount = 0;
 
-        // Add initial orders
         window.onload = function() {
             addBallOrder();
             addAccessoryOrder();
@@ -350,6 +297,10 @@
                     <label>Quantity</label>
                     <input type="text" name="ballQuantity${ballOrderCount}" value="1">
                 </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea name="ballNotes${ballOrderCount}"></textarea>
+                </div>
                 <button type="button" class="btn-danger" onclick="removeBallOrder(${ballOrderCount})">Remove Ball Order</button>
             `;
             container.appendChild(orderDiv);
@@ -357,9 +308,7 @@
 
         function removeBallOrder(id) {
             const element = document.getElementById(`ballOrder${id}`);
-            if (element) {
-                element.remove();
-            }
+            if (element) element.remove();
         }
 
         function addAccessoryOrder() {
@@ -389,9 +338,7 @@
 
         function removeAccessoryOrder(id) {
             const element = document.getElementById(`accessoryOrder${id}`);
-            if (element) {
-                element.remove();
-            }
+            if (element) element.remove();
         }
 
         function addShoeOrder() {
@@ -433,9 +380,7 @@
 
         function removeShoeOrder(id) {
             const element = document.getElementById(`shoeOrder${id}`);
-            if (element) {
-                element.remove();
-            }
+            if (element) element.remove();
         }
 
         function resetForm() {
@@ -457,9 +402,7 @@
             msgDiv.textContent = message;
             msgDiv.className = type;
             msgDiv.style.display = 'block';
-            setTimeout(() => {
-                msgDiv.style.display = 'none';
-            }, 3000);
+            setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
         }
 
         document.getElementById('orderForm').addEventListener('submit', function(e) {
@@ -468,18 +411,16 @@
         });
 
         function submitOrder() {
-            // Collect customer information
             const customerInfo = {
                 name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
                 phone: document.getElementById('customerNumber').value,
                 location: document.getElementById('orderLocation').value,
-                orderDue: document.getElementById('orderDue').value,
+                pickupLocation: document.getElementById('pickupLocation').value,
                 customerPaid: document.getElementById('customerPaid').value,
-                staffMember: document.getElementById('staffMember').value,
                 extraNotes: document.getElementById('extraNotes').value
             };
 
-            // Collect all orders
             const orders = [];
 
             // Collect ball orders
@@ -491,7 +432,7 @@
                         name: ballName.value,
                         weight: document.querySelector(`select[name="ballWeight${i}"]`).value,
                         quantity: document.querySelector(`input[name="ballQuantity${i}"]`).value || '1',
-                        notes: ''
+                        notes: document.querySelector(`textarea[name="ballNotes${i}"]`).value
                     });
                 }
             }
@@ -513,19 +454,14 @@
             for (let i = 1; i <= shoeOrderCount; i++) {
                 const shoeName = document.querySelector(`input[name="shoeName${i}"]`);
                 if (shoeName && shoeName.value.trim()) {
-                    const size = document.querySelector(`input[name="shoeSize${i}"]`).value;
-                    const gender = document.querySelector(`select[name="shoeGender${i}"]`).value;
-                    const color = document.querySelector(`input[name="shoeColor${i}"]`).value;
-                    const notes = document.querySelector(`textarea[name="shoeNotes${i}"]`).value;
-                    
                     orders.push({
                         type: 'Shoe',
                         name: shoeName.value,
-                        size: size,
-                        gender: gender,
-                        color: color,
+                        size: document.querySelector(`input[name="shoeSize${i}"]`).value,
+                        gender: document.querySelector(`select[name="shoeGender${i}"]`).value,
+                        color: document.querySelector(`input[name="shoeColor${i}"]`).value,
                         quantity: '1',
-                        notes: notes
+                        notes: document.querySelector(`textarea[name="shoeNotes${i}"]`).value
                     });
                 }
             }
@@ -535,23 +471,15 @@
                 return;
             }
 
-            // Send data to Google Apps Script
-            const payload = {
-                customerInfo: customerInfo,
-                orders: orders
-            };
-
+            const payload = { customerInfo, orders };
             console.log('Submitting order:', payload);
-            
-            // TODO: Replace with your actual Apps Script Web App URL
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbyqUkpuXIdn1Kx9bGbwo2hoQ0sMGVGsQ8oA4bJYCCAs6BL2lqKCud6FaE1IIjJCfZSa/exec';
-            
+
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwweLfESPxSZ3rhp8rzSbmhdX4jBe5qxtPkR3tm30G6vr4wFlDzUOYIY3r1uzaL6Vxa/exec';
+
             fetch(scriptUrl, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             })
             .then(() => {
